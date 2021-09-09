@@ -6,6 +6,14 @@
 #
 
 #
+# My: Development
+#
+
+export ANDROID_SDK='/Users/teodor/Library/Android/sdk'
+
+
+
+#
 # Browser
 #
 
@@ -43,6 +51,8 @@ typeset -gU cdpath fpath mailpath path
 
 # Set the list of directories that Zsh searches for programs.
 path=(
+  $HOME/Library/Android/sdk/platform-tools
+  $HOME/scripts/bin
   /usr/local/{bin,sbin}
   $path
 )
