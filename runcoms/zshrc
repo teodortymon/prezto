@@ -30,3 +30,5 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
