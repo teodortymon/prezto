@@ -9,7 +9,7 @@
 # My: Development
 #
 
-export ANDROID_SDK='/Users/teodor/Library/Android/sdk'
+export ANDROID_SDK='/Users/${HOME}/Library/Android/sdk'
 
 
 
@@ -72,4 +72,11 @@ if (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [[ "$OSTYPE" == darwin* ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+
+

@@ -30,7 +30,6 @@ zstyle ':prezto:*:*' color 'yes'
 # Set the Prezto modules to load (browse modules).
 # The order matters.
 zstyle ':prezto:load' pmodule \
-  'fzf-tab' \
   'environment' \
   'terminal' \
   'editor' \
@@ -40,14 +39,18 @@ zstyle ':prezto:load' pmodule \
   'utility' \
   'archive' \
   'docker' \
-  'git' \
   'command-not-found' \
   'completion' \
-  'syntax-highlighting' \
-  'history-substring-search' \
   'autosuggestions' \
-  'fasd' \
   'prompt'
+  # 'git' \
+  
+# Archived modules:
+  # 'syntax-highlighting' \
+  # 'history-substring-search' \
+  # 'fzf-tab' \
+  # 'fasd' \
+  
 
 #
 # Autosuggestions
