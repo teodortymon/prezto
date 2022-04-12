@@ -10,44 +10,68 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
-
+# Own aliases
 alias d='docker run -it --rm --volume $PWD:/code --workdir=/code/'
 alias b=bat
 alias m=micro
 tre() { command tre "$@" -e && source "/tmp/tre_aliases_$USER" 2>/dev/null; }
 alias t=tre
-
-# export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# alias loadnvm="\. "$NVM_DIR/nvm.sh && \. "$NVM_DIR/bash_completion"
-
+alias ammend='git commit --amend --no-edit'
 git config --global alias.nuke '!sh -c "git branch -D $1 && git push origin :$1" -'
 
+# Expand aliases on space
+function expand-alias() {
+  zle _expand_alias
+  zle self-insert
+}
+zle -N expand-alias
+bindkey -M main ' ' expand-alias
+
 if [ "$(uname)" != "Darwin" ]; then
+  # Windows specific commandos
   precmd() {
     printf "\e]9;9;%s\e\\" "$(wslpath -m "$PWD")"
+    export PATH=$PATH:'/mnt/c/Users/svrtwo/AppData/Local/Programs/Microsoft VS Code/bin'
   }
+else
+  # OS X specific commandos
+  export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH" # Set to use make from brew instead of the apple default
+  export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+  export CPPFLAGS="-I/opt/homebrew/opt/openjdk@11/include"
+  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 fi
 
+# Java jenv
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+# Rust cargo apps
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# Android
 export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH=$PATH:'/mnt/c/Users/svrtwo/AppData/Local/Programs/Microsoft VS Code/bin'
+
+# Python poetry
 export PATH="$HOME/.poetry/bin:$PATH"
+
+# JS Yarn
 export PATH="$PATH:/opt/yarn-[version]/bin"
 
-export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk@11/include"
+# JS Node
+# export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# alias loadnvm="\. "$NVM_DIR/nvm.sh && \. "$NVM_DIR/bash_completion"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# FZF fuzzy finder
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Broot launcher
 test -e "${HOME}/.config/broot/launcher/bash/br" && source "${HOME}/.config/broot/launcher/bash/br"
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # SCM Breeze
 [ -s "${HOME}/.scm_breeze/scm_breeze.sh" ] && source "${HOME}/.scm_breeze/scm_breeze.sh"
